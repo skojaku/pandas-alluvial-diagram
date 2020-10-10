@@ -73,15 +73,6 @@ df = pd.read_csv("https://raw.githubusercontent.com/skojaku/pandas-alluvial-diag
 allu_pandas.draw(df, ["species", "island", "sex"])
 ```
 
-```python
-import pandas as pd
-import allu_pandas
-
-df = pd.read_csv("https://raw.githubusercontent.com/skojaku/pandas-alluvial-diagram/main/data/penguins.csv")
-
-allu_pandas.draw(df, ["species", "island", "sex"])
-```
-
 # Sample data
 - penguins: https://github.com/allisonhorst/penguins (compiled by https://github.com/mwaskom/seaborn-data)
 
