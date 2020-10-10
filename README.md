@@ -1,10 +1,11 @@
 # pandas-alluvial-diagram
 
-A python library for drawing alluvial diagram
+![example](https://raw.githubusercontent.com/skojaku/pandas-alluvial-diagram/main/figs/example.png)
+
+A python library for drawing alluvial diagram based on matplotlib
 
 
 # Installation
-
 
 Download the repository
 
@@ -38,7 +39,7 @@ pip install .
 ```python
 import allu_pandas
 
-allu_pandas.draw(df, ["species", "island", "sex"], palette = "Set1")
+allu_pandas.draw(df, columns, palette = "Set1")
 ```
 
 `allu_pandas.draw` draws an alluvial diagram, with flows between groups specified by columns of `df`.
@@ -49,9 +50,9 @@ The height of a group represents the number of records that the group contains.
 - `df`: pandas.DataFrame
 - `columns`: list of str
     - Name of columns
-- `color`: str or func
-    - Name of color of a function for each flow across multiple groups. A flow starts from the left-most group, go through middle groups and end at the right-most group. If a function is given, the function will receive a list of (`col`, `v`) pairs in order of the groups along the path. For example, if a flow goes along a path of groups, ('col1', 'a'), ('col2', 'x'), ('col3', 'W'), then the function will receive list [('col1', 'a'), ('col2', 'x'), ('col3', 'W')].
-- `palette`: str
+- colore_by: str
+    - The flow will be colored by df[color_by]. If not specified, columns[0] will be used.
+- `palette`: str or list
     - Palette of colors. Flow will be colored based on the left-most group.
 - `ax`: matplotlib.pyplo.gca
 - `margin`: vertical margin between groups
