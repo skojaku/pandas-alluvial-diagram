@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 from . import utils
 
 
-def draw(df, columns, color=None, palette=None, ax=None, margin=0.05, row_order=[]):
+def draw(df, columns, color=None, palette=None, ax=None, margin=0.05, label_pad = 0.05, row_order=[]):
     """
     Draw alluvial diagram from pandas. 
     This function draws an alluvial diagram, with flows between groups specified by columns of `df`.
@@ -40,10 +40,16 @@ def draw(df, columns, color=None, palette=None, ax=None, margin=0.05, row_order=
     sum_all = dg[0].sum()
 
     #
+    # Order group vertically
+    #
+    dg = utils.order_groups_by_rows(dg, columns, row_order)
+
+    #
     # Compute the top left coner of groups
     #
     offset = {}
-    for col in columns:
+    group_position_type = {}
+    for col_id, col in enumerate(columns):
         keys = dg[col].drop_duplicates().values
         offset_key = 0.0
 
@@ -53,13 +59,37 @@ def draw(df, columns, color=None, palette=None, ax=None, margin=0.05, row_order=
 
         for i, key in enumerate(keys):
             offset[(col, key)] = -offset_key
+
             v = np.sum(dg.loc[dg[col] == key, 0]) / sum_all
             offset_key += v + margin
 
+            if (col_id==0):
+                group_position_type[(col, key)] = "left"
+            elif (col_id==len(columns)-1):
+                group_position_type[(col, key)] = "right"
+            else:
+                group_position_type[(col, key)] = "middle"
+
+        if (col_id!=0) and (col_id!=len(columns)-1):
+            group_position_type[(col, keys[0])] = "top"
+            group_position_type[(col, keys[-1])] = "bottom"
     #
-    # Order group vertically
+    # Compute the coordinate of flows
     #
-    dg = utils.order_groups_by_rows(dg, columns, row_order)
+    flows = []
+    flows_bundled_by_group = {}
+    for _, row in dg.iterrows():
+        height = row[0] / sum_all
+        # make a list of (x,y) going through the top left corner of the group
+        xys = []
+        for i, col in enumerate(columns):
+            xys += [(i / (len(columns) - 1), offset[(col, row[col])])]
+            offset[(col, row[col])] = offset[(col, row[col])] - height
+        flow={"xys":xys, "height":height, "groups":[(c, row[c]) for c in columns]}
+        flows+=[flow]
+        
+        for i, col in enumerate(columns):
+            flows_bundled_by_group[(col, row[col])]=flows_bundled_by_group.get((col, row[col]), []) + [flow]
 
     #
     # Set the colors
@@ -67,25 +97,50 @@ def draw(df, columns, color=None, palette=None, ax=None, margin=0.05, row_order=
     palette = utils.make_color_palette(dg, columns, color, palette)
 
     #
-    # Draw
+    # Draw flows
     #
-    for _, row in dg.iterrows():
-        height = row[0]
-        # make a list of (x,y) going through the top left corner of the group
-        xys = []
-        for i, col in enumerate(columns):
-            xys += [(i / (len(columns) - 1), offset[(col, row[col])])]
-            offset[(col, row[col])] = offset[(col, row[col])] - height / sum_all
+    for flow in flows:
+        height = flow["height"]
+        xys = flow["xys"]
+        groups = flow["groups"]
 
         # generate color
         if callable(palette):
-            c = palette([(col, row[col]) for col in columns])
+            c = palette([group for group in groups])
         else:
             c = palette
 
         # Draw bezier curve
-        utils.plot_curves(xys, height / sum_all, ax, color=c)
+        utils.plot_curves(xys, height, ax, color=c)
+    
+    #
+    # Draw labels
+    #
+    for (col, v), flows_in_group in flows_bundled_by_group.items():
+        # compute the corner
+        cid = np.where(np.isin(columns, col))[0][0]
+        x = np.min( [flow["xys"][cid][0] for flow in flows_in_group] )
+        y = np.max( [flow["xys"][cid][1] for flow in flows_in_group] )
+        height = np.sum([flow["height"] for flow in flows_in_group])
+        group_pos = group_position_type[(col, v)]
 
+        label_x = x + label_pad 
+        label_y = y - height/2
+        label_ha = "left"
+        label_va = "center"
+        if group_pos == "left":
+            label_ha = "right"
+            label_x = -label_pad
+        elif group_pos == "right":
+            label_ha = "left"
+            label_x = 1 + label_pad 
+        elif group_pos == "top":
+            label_va = "bottom"
+            label_y = y  + label_pad
+        elif group_pos == "bottom":
+            label_va = "top"
+            label_y = y -height- label_pad
+        ax.annotate(v, xy=(label_x, label_y), xycoords = "data", ha=label_ha, va = label_va)
     #
     # Prettify
     #
