@@ -50,7 +50,7 @@ The height of a group represents the number of records that the group contains.
 - `df`: pandas.DataFrame
 - `columns`: list of str
     - Name of columns
-- colore_by: str
+- `colore_by`: str
     - The flow will be colored by df[color_by]. If not specified, columns[0] will be used.
 - `palette`: str or list
     - Palette of colors. Flow will be colored based on the left-most group. Acceptable color code are hex (e.g., "#aabbcc"), name of colors (e.g., "red"), and the name of matplolib color palette (e.g., "Set1" and "tab10").
