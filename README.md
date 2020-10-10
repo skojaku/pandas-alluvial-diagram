@@ -62,17 +62,10 @@ The height of a group represents the number of records that the group contains.
 
 # Examples
 
-### Example 1
-
-```python
-import pandas as pd
-import allu_pandas
-
-df = pd.read_csv("https://raw.githubusercontent.com/skojaku/pandas-alluvial-diagram/main/data/penguins.csv")
-
-allu_pandas.draw(df, ["species", "island", "sex"])
-```
+- [Get started](https://github.com/skojaku/pandas-alluvial-diagram/blob/main/notebooks/example1.ipynb)
+- [Advanced](https://github.com/skojaku/pandas-alluvial-diagram/blob/main/notebooks/example2.ipynb)
+- [Beyond](https://github.com/skojaku/pandas-alluvial-diagram/blob/main/notebooks/example3.ipynb)
 
 # Sample data
 - penguins: https://github.com/allisonhorst/penguins (compiled by https://github.com/mwaskom/seaborn-data)
-
+- taitanic: https://github.com/mwaskom/seaborn-data/blob/master/titanic.csv
