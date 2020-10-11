@@ -1,6 +1,5 @@
-# pandas-alluvial-diagram
+# A python library for drawing alluvial diagram
 
-A python library for drawing alluvial diagram
 
 
 # Installation
