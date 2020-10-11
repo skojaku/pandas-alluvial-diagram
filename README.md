@@ -62,6 +62,8 @@ The height of a group represents the number of records that the group contains.
     - Palette of colors. Flow will be colored based on the left-most group. Acceptable color code are hex (e.g., "#aabbcc"), name of colors (e.g., "red"), and the name of matplolib color palette (e.g., "Set1" and "tab10").
 - `ax`: matplotlib.pyplo.gca
 - `margin`: vertical margin between groups
+- `show_count`: bool
+    - Set True to show the number of records in the group
 - `label_pad`: margin between the flow and labels 
 - `row_order`: list of tuples
     - Each tuple is (`col`, `v`), where `col` is the column name and `v` is the value of the group. Force a group with row_order[i] to be placed above row_order[i+1]
