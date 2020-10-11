@@ -5,9 +5,9 @@
 # Motivation
 
 Alluvial diagram is a powerful way to visualize different groupings of the same data.
-Although there are a plethona of visualization methods such as `plotly`, `d3.js` and `matplotlib`, they require a specially formatted data, resulting many lines of codes.
+Although there are a plethora of visualization methods such as `plotly`, `d3.js` and `matplotlib`, they require a specially formatted data, resulting many lines of codes.
 
-I am developping a tool that takes `pandas`, a widely-used data table, to visualize a beutiful alluvial diagram, without relaying on non-standard libraries.
+I am developing a tool that takes `pandas`, a widely-used data table, to visualize a beautiful alluvial diagram, without relaying on non-standard libraries.
 The tool is under development and any contribution is more than welcome:smirk_cat:.  
 
 # Installation
@@ -49,7 +49,7 @@ allu_pandas.draw(df, columns, palette = "Set1")
 
 `allu_pandas.draw` draws an alluvial diagram, with flows between groups specified by columns of `df`.
 Specifically, each group is a set of records with the same column (say `col`) and value in the column (say `v`).
-The groups are orderd horizontally based on `col` and vertically based on `v`.
+The groups are ordered horizontally based on `col` and vertically based on `v`.
 The height of a group represents the number of records that the group contains.
 
 - `df`: pandas.DataFrame
