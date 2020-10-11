@@ -1,7 +1,14 @@
-# A python library for drawing alluvial diagram
+# A python library for drawing alluvial diagram based on pandas
 
 ![example](https://raw.githubusercontent.com/skojaku/pandas-alluvial-diagram/main/figs/example.png)
 
+# Motivation
+
+Alluvial diagram is a powerful way to visualize different groupings of the same data.
+Although there are a plethona of visualization methods such as `plotly`, `d3.js` and `matplotlib`, they require a specially formatted data, resulting many lines of codes.
+
+I am developping a tool that takes `pandas`, a widely-used data table, to visualize a beutiful alluvial diagram, without relaying on non-standard libraries.
+The tool is under development and any contribution is more than welcome:smirk_cat:.  
 
 # Installation
 
