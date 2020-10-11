@@ -49,7 +49,7 @@ allu_pandas.draw(df, columns, palette = "Set1")
 ```
 
 `allu_pandas.draw` draws an alluvial diagram, with flows between groups specified by columns of `df`.
-Specifically, each group is a set of records with the same column (say `col`) and value in the column (say `v`).
+Specifically, each group is a set of records with the same column (say `col`) and value in the column (say `v`). In other words, a group is a set of records with the same (`col`, `v`) pair. 
 The groups are ordered horizontally based on `col` and vertically based on `v`.
 The height of a group represents the number of records that the group contains.
 
