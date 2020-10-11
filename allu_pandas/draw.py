@@ -11,6 +11,7 @@ def draw(
     ax=None,
     margin=0.2,
     label_pad=0.05,
+    show_count = False,
     row_order=[],
 ):
     """
@@ -108,6 +109,7 @@ def draw(
             "height": height,
             "groups": [(c, row[c]) for c in columns],
             "color": row["_color"],
+            "sz": row[0],
         }
         flows += [flow]
 
@@ -136,6 +138,7 @@ def draw(
         x = np.min([flow["xys"][cid][0] for flow in flows_in_group])
         y = np.max([flow["xys"][cid][1] for flow in flows_in_group])
         height = np.sum([flow["height"] for flow in flows_in_group])
+        sz = flow["sz"]
         group_pos = group_position_type[(col, v)]
 
         label_x = x + label_pad
@@ -154,6 +157,9 @@ def draw(
         elif group_pos == "bottom":
             label_va = "top"
             label_y = y - height - label_pad
+
+        if show_count :
+            v = v+"\n(%d)" % sz
         ax.annotate(v, xy=(label_x, label_y), xycoords="data", ha=label_ha, va=label_va)
     #
     # Prettify
