@@ -7,7 +7,8 @@
 Alluvial diagram is a powerful way to visualize different groupings of the same data.
 Although there are a plethora of visualization methods such as `plotly`, `d3.js` and `matplotlib`, they require a specially formatted data, resulting many lines of codes.
 
-I am developing a tool that takes `pandas`, a widely-used data table, to visualize a beautiful alluvial diagram, without relaying on non-standard libraries.
+Here, I am developing a tool to visualize a beautiful alluvial diagram *directly* from `pandas`, a widely-used data table. The tool is based on matplotlib and thus can be used without install any special library. 
+
 The tool is under development and any contribution is more than welcome:smirk_cat:.  
 
 # Installation
