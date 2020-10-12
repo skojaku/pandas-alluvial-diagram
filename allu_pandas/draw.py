@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from . import utils
-from matplotlib.patheffects import PathEffects
+import matplotlib.patheffects as PathEffects
 
 
 def draw(
