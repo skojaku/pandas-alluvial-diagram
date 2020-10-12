@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from . import utils
+from matplotlib.patheffects import PathEffects
 
 
 def draw(
@@ -11,7 +12,7 @@ def draw(
     ax=None,
     margin=0.2,
     label_pad=0.05,
-    show_count = False,
+    show_count=False,
     row_order=[],
 ):
     """
@@ -138,7 +139,8 @@ def draw(
         x = np.min([flow["xys"][cid][0] for flow in flows_in_group])
         y = np.max([flow["xys"][cid][1] for flow in flows_in_group])
         height = np.sum([flow["height"] for flow in flows_in_group])
-        sz = flow["sz"]
+        sz = np.sum([flow["sz"] for flow in flows_in_group])
+
         group_pos = group_position_type[(col, v)]
 
         label_x = x + label_pad
@@ -153,14 +155,23 @@ def draw(
             label_x = 1 + label_pad
         elif group_pos == "top":
             label_va = "bottom"
-            label_y = y + label_pad
+            label_ha = "center"
+            label_x = x
+            label_y = y + 2 * label_pad
         elif group_pos == "bottom":
             label_va = "top"
-            label_y = y - height - label_pad
+            label_ha = "center"
+            label_x = x
+            label_y = y - height - 2 * label_pad
 
-        if show_count :
-            v = v+"\n(%d)" % sz
-        ax.annotate(v, xy=(label_x, label_y), xycoords="data", ha=label_ha, va=label_va)
+        if show_count:
+            v = v + "\n(%d)" % sz
+        txt = ax.annotate(
+            v, xy=(label_x, label_y), xycoords="data", ha=label_ha, va=label_va
+        )
+        txt.set_path_effects([PathEffects.withStroke(linewidth=5, foreground="w")])
+        plt.draw()
+
     #
     # Prettify
     #
